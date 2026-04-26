@@ -33,7 +33,7 @@
 
         /* --- DARK MODE Overrides (Deep Earth Tones) --- */
         body.dark-mode {
-            --forest-green: #22c55e; /* Deepened the green for better earthy contrast */
+            --forest-green: #22c55e; 
             --forest-green-hover: #16a34a;
             --slate-gray: #a8a39d; 
             --off-white: #1c1a17; 
@@ -155,19 +155,38 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            height: 85px; 
+            min-height: 85px; 
+            flex-wrap: wrap; /* Allows menu to drop down on mobile */
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .logo {
             display: flex;
             align-items: center;
             height: 100%;
+            padding: 10px 0;
         }
 
         .logo img {
             max-height: 50px; 
             width: auto;
             object-fit: contain;
+        }
+
+        /* Hamburger Menu Button */
+        .mobile-menu-btn {
+            display: none;
+            background: transparent;
+            border: none;
+            font-size: 2rem;
+            color: var(--text-dark);
+            cursor: pointer;
+            padding: 5px;
         }
 
         .nav-container {
@@ -423,17 +442,24 @@
 
         /* --- Mobile Responsiveness --- */
         @media (max-width: 900px) {
-            header {
-                flex-direction: column;
-                height: auto;
-                padding: 1rem 5%;
-                gap: 1rem;
+            .header-top {
+                width: 100%;
+            }
+
+            .mobile-menu-btn {
+                display: block;
             }
 
             .nav-container {
+                display: none; /* Hidden by default on mobile */
                 flex-direction: column;
-                gap: 1rem;
                 width: 100%;
+                padding-bottom: 20px;
+                gap: 1rem;
+            }
+
+            .nav-container.show {
+                display: flex; /* Shown when toggled */
             }
 
             .theme-toggle-btn {
@@ -460,7 +486,7 @@
             .mobile-call-btn {
                 display: block;
                 width: 100%;
-                margin-top: 1rem;
+                margin-top: 0.5rem;
             }
 
             h1 { font-size: 2rem; }
@@ -474,10 +500,14 @@
 <body>
 
     <header>
-        <a href="#" class="logo">
-            <img src="Landscaping_Photos/logo_MAIN.png" alt="Santiago's Landscaping Logo">
-        </a>
-        <div class="nav-container">
+        <div class="header-top">
+            <a href="#" class="logo">
+                <img src="Landscaping_Photos/logo_MAIN.png" alt="Santiago's Landscaping Logo">
+            </a>
+            <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle Navigation Menu">☰</button>
+        </div>
+        
+        <div class="nav-container" id="nav-container">
             <button class="theme-toggle-btn" id="theme-toggle" aria-label="Toggle dark mode">
                 <span class="theme-icon" id="theme-icon">🌙</span>
                 <span class="theme-text" id="theme-text">Dark Mode</span>
@@ -490,8 +520,8 @@
                     <li><a href="#contact">Contact</a></li>
                 </ul>
             </nav>
+            <a href="tel:3136146395" class="btn mobile-call-btn">Tap to Call</a>
         </div>
-        <a href="tel:3136146395" class="btn mobile-call-btn">Tap to Call: (313) 614-6395</a>
     </header>
 
     <section class="hero">
@@ -637,13 +667,37 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            // --- 1. Light/Dark Mode Logic ---
+            // --- 1. Mobile Hamburger Menu Logic ---
+            const mobileBtn = document.getElementById('mobile-menu-btn');
+            const navContainer = document.getElementById('nav-container');
+            const navLinks = document.querySelectorAll('nav ul li a');
+
+            mobileBtn.addEventListener('click', function() {
+                navContainer.classList.toggle('show');
+                // Change icon to 'X' when open
+                if (navContainer.classList.contains('show')) {
+                    mobileBtn.innerHTML = '✕';
+                } else {
+                    mobileBtn.innerHTML = '☰';
+                }
+            });
+
+            // Close the menu automatically when a user clicks a link
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    if (window.innerWidth <= 900) {
+                        navContainer.classList.remove('show');
+                        mobileBtn.innerHTML = '☰';
+                    }
+                });
+            });
+
+            // --- 2. Light/Dark Mode Logic ---
             const toggleBtn = document.getElementById('theme-toggle');
             const themeIcon = document.getElementById('theme-icon');
             const themeText = document.getElementById('theme-text');
             const body = document.body;
 
-            // Check localStorage for preferred theme on load
             const currentTheme = localStorage.getItem('theme');
             if (currentTheme) {
                 body.classList.add(currentTheme);
@@ -651,18 +705,14 @@
             }
 
             toggleBtn.addEventListener('click', function() {
-                // Toggle the class on body
                 body.classList.toggle('dark-mode');
-                
                 let isDarkMode = body.classList.contains('dark-mode');
                 
-                // Update localStorage so preference persists
                 if (isDarkMode) {
                     localStorage.setItem('theme', 'dark-mode');
                 } else {
                     localStorage.setItem('theme', 'light-mode'); 
                 }
-                
                 updateToggleUI(isDarkMode);
             });
 
@@ -677,29 +727,27 @@
             }
 
 
-            // --- 2. Hero Background Logic ---
+            // --- 3. Hero Background Logic ---
             const heroSlides = document.querySelectorAll('.hero-bg');
             let currentHeroIndex = 0;
 
             function nextHeroSlide() {
-                if(heroSlides.length === 0) return; // safety check
+                if(heroSlides.length === 0) return; 
                 
                 heroSlides[currentHeroIndex].classList.remove('active');
                 currentHeroIndex = (currentHeroIndex + 1) % heroSlides.length;
                 heroSlides[currentHeroIndex].classList.add('active');
 
-                // If we loop back to the main image (index 0), wait 5 seconds. Otherwise, wait 3 seconds.
                 let nextDelay = (currentHeroIndex === 0) ? 5000 : 3000;
                 setTimeout(nextHeroSlide, nextDelay);
             }
             
-            // Start the first transition after the initial 5 seconds
             if(heroSlides.length > 1) {
                 setTimeout(nextHeroSlide, 5000);
             }
 
 
-            // --- 3. Portfolio Gallery Logic ---
+            // --- 4. Portfolio Gallery Logic ---
             const portfolioSlideshows = document.querySelectorAll('.portfolio-slideshow');
             
             portfolioSlideshows.forEach(container => {
