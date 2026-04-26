@@ -156,7 +156,7 @@
             justify-content: space-between;
             align-items: center;
             min-height: 85px; 
-            flex-wrap: wrap; /* Allows menu to drop down on mobile */
+            flex-wrap: wrap; 
         }
 
         .header-top {
@@ -451,7 +451,7 @@
             }
 
             .nav-container {
-                display: none; /* Hidden by default on mobile */
+                display: none; 
                 flex-direction: column;
                 width: 100%;
                 padding-bottom: 20px;
@@ -459,7 +459,7 @@
             }
 
             .nav-container.show {
-                display: flex; /* Shown when toggled */
+                display: flex; 
             }
 
             .theme-toggle-btn {
@@ -516,8 +516,8 @@
                 <ul>
                     <li><a href="#about">About Us</a></li>
                     <li><a href="#services">Services</a></li>
-                    <li><a href="#portfolio">Our Work</a></li>
                     <li><a href="#contact">Contact</a></li>
+                    <li><a href="#portfolio">Our Work</a></li>
                 </ul>
             </nav>
             <a href="tel:3136146395" class="btn mobile-call-btn">Tap to Call</a>
@@ -562,13 +562,33 @@
                 <p>Extend your outdoor living season with safely constructed, beautifully designed stone and brick firepits.</p>
             </div>
             <div class="card">
-                <h3>💧 Irrigation Systems</h3>
-                <p>Keep your lawn lush and green with automated, water-efficient irrigation installations.</p>
+                <h3>🌧️ Drainage Solutions</h3>
+                <p>Protect your property and keep your yard dry with custom underground downspout extensions and drainage piping.</p>
             </div>
         </div>
     </section>
 
-    <section id="portfolio">
+    <section id="contact">
+        <h2>Contact Us for a Free Estimate</h2>
+        <div class="contact-container">
+            <p class="contact-instructions">
+                The fastest way to get your free, no-obligation estimate is to call or text us. Please have a brief description of the work you need done and your property address ready!
+            </p>
+            
+            <div class="contact-highlight-box">
+                <p style="margin-bottom: 0.5rem; font-weight: bold; color: var(--text-dark); text-transform: uppercase; letter-spacing: 1px;">Call or Text us directly at:</p>
+                
+                <a href="tel:3136146395" class="phone-link">(313) 614-6395</a>
+                
+                <div class="contact-buttons">
+                    <a href="tel:3136146395" class="btn btn-earth">📞 Tap to Call</a>
+                    <a href="sms:3136146395" class="btn">💬 Tap to Text</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="portfolio" class="bg-gray">
         <h2>Project Gallery</h2>
         <div class="grid">
             
@@ -612,7 +632,7 @@
         </div>
     </section>
 
-    <section class="bg-gray">
+    <section>
         <h2>What Our Clients Say</h2>
         <div class="grid">
             <div class="card">
@@ -630,26 +650,6 @@
             <div class="card">
                 <p class="testimonial-text">"The new custom firepit is the highlight of our backyard! We use it every weekend. Excellent stonework and attention to detail."</p>
                 <p class="testimonial-author">- Sarah M., Canton</p>
-            </div>
-        </div>
-    </section>
-
-    <section id="contact">
-        <h2>Contact Us for a Free Estimate</h2>
-        <div class="contact-container">
-            <p class="contact-instructions">
-                The fastest way to get your free, no-obligation estimate is to call or text us. Please have a brief description of the work you need done and your property address ready!
-            </p>
-            
-            <div class="contact-highlight-box">
-                <p style="margin-bottom: 0.5rem; font-weight: bold; color: var(--text-dark); text-transform: uppercase; letter-spacing: 1px;">Call or Text us directly at:</p>
-                
-                <a href="tel:3136146395" class="phone-link">(313) 614-6395</a>
-                
-                <div class="contact-buttons">
-                    <a href="tel:3136146395" class="btn btn-earth">📞 Tap to Call</a>
-                    <a href="sms:3136146395" class="btn">💬 Tap to Text</a>
-                </div>
             </div>
         </div>
     </section>
@@ -674,7 +674,6 @@
 
             mobileBtn.addEventListener('click', function() {
                 navContainer.classList.toggle('show');
-                // Change icon to 'X' when open
                 if (navContainer.classList.contains('show')) {
                     mobileBtn.innerHTML = '✕';
                 } else {
@@ -682,7 +681,6 @@
                 }
             });
 
-            // Close the menu automatically when a user clicks a link
             navLinks.forEach(link => {
                 link.addEventListener('click', () => {
                     if (window.innerWidth <= 900) {
@@ -738,12 +736,14 @@
                 currentHeroIndex = (currentHeroIndex + 1) % heroSlides.length;
                 heroSlides[currentHeroIndex].classList.add('active');
 
-                let nextDelay = (currentHeroIndex === 0) ? 5000 : 3000;
+                // Changed delay: Main image (index 0) gets 8 seconds, others get 3 seconds
+                let nextDelay = (currentHeroIndex === 0) ? 8000 : 3000;
                 setTimeout(nextHeroSlide, nextDelay);
             }
             
             if(heroSlides.length > 1) {
-                setTimeout(nextHeroSlide, 5000);
+                // Changed initial timeout to 8 seconds
+                setTimeout(nextHeroSlide, 8000);
             }
 
 
