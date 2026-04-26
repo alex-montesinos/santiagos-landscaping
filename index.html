@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Santiago's Landscaping LLC | Metro Detroit</title>
+    <style>
+        /* --- Color Palette & Variables --- */
+        :root {
+            /* --- LIGHT MODE (Earthy & Modern) --- */
+            --forest-green: #1b4d30; 
+            --forest-green-hover: #133822;
+            --slate-gray: #4a4641; 
+            --off-white: #faf8f5; 
+            --earth-brown: #8b5a2b;
+            --text-dark: #2c2a27; 
+            --text-light: #ffffff; 
+
+            /* Specific component colors for light mode */
+            --nav-bg: #ffffff;
+            --nav-text: #2c2a27;
+            --card-bg: #ffffff;
+            --card-border: #dedbd2; 
+            --bg-gray-section: #edeae1; 
+            --footer-bg: #3d3a35; 
+            --footer-text: #faf8f5;
+            --highlight-box-bg: #ffffff;
+            
+            /* Theme Toggle Button Specifics */
+            --toggle-btn-bg: #edeae1;
+            --toggle-btn-text: #2c2a27;
+        }
+
+        /* --- DARK MODE Overrides (Deep Earth Tones) --- */
+        body.dark-mode {
+            --forest-green: #22c55e; /* Deepened the green for better earthy contrast */
+            --forest-green-hover: #16a34a;
+            --slate-gray: #a8a39d; 
+            --off-white: #1c1a17; 
+            --earth-brown: #d97706; 
+            --text-dark: #f5f3ec; 
+            --text-light: #ffffff; 
+
+            /* Specific component colors for dark mode */
+            --nav-bg: #262420; 
+            --nav-text: #f5f3ec;
+            --card-bg: #262420;
+            --card-border: #3d3830; 
+            --bg-gray-section: #161412; 
+            --footer-bg: #0d0c0a; 
+            --footer-text: #f5f3ec;
+            --highlight-box-bg: #262420;
+
+            /* Theme Toggle Button Specifics */
+            --toggle-btn-bg: #3d3830;
+            --toggle-btn-text: #f5f3ec;
+        }
+
+        /* --- Global & Elder-Friendly Typography --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-size: 18px; 
+            line-height: 1.6;
+            color: var(--text-dark);
+            background-color: var(--off-white);
+        }
+
+        h1, h2, h3 {
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+            color: var(--forest-green);
+        }
+
+        h1 { font-size: 2.5rem; color: #ffffff; }
+        h2 { font-size: 2rem; text-align: center; margin-bottom: 2rem; }
+        h3 { font-size: 1.5rem; }
+
+        p {
+            margin-bottom: 1.5rem;
+        }
+
+        strong {
+            font-weight: 700;
+            color: inherit; 
+        }
+
+        /* --- Buttons --- */
+        .btn {
+            display: inline-block;
+            background-color: var(--forest-green);
+            color: #ffffff; 
+            padding: 16px 32px; 
+            font-size: 1.2rem;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 8px;
+            text-align: center;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover, .btn:focus {
+            background-color: var(--forest-green-hover);
+            color: #ffffff;
+        }
+
+        .btn-earth {
+            background-color: var(--earth-brown);
+        }
+
+        .btn-earth:hover {
+            background-color: #6b4421;
+        }
+
+        /* --- Theme Toggle Button Styling --- */
+        .theme-toggle-btn {
+            background-color: var(--toggle-btn-bg);
+            color: var(--toggle-btn-text);
+            border: 2px solid var(--card-border);
+            padding: 10px 20px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-right: 20px; 
+        }
+
+        .theme-toggle-btn:hover {
+            opacity: 0.9;
+        }
+
+        .theme-icon {
+            font-size: 1.2rem;
+        }
+
+        /* --- Navigation --- */
+        header {
+            background-color: var(--nav-bg);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.08); 
+            padding: 0 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 85px; 
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            height: 100%;
+        }
+
+        .logo img {
+            max-height: 50px; 
+            width: auto;
+            object-fit: contain;
+        }
+
+        .nav-container {
+            display: flex;
+            align-items: center;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--nav-text);
+            font-weight: 600;
+            font-size: 1.1rem;
+            padding: 8px; 
+        }
+
+        .mobile-call-btn {
+            display: none; 
+        }
+
+        /* --- Hero Section (Slideshow Background) --- */
+        .hero {
+            position: relative;
+            height: 70vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 5%;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out; 
+            z-index: 1;
+        }
+
+        .hero-bg.active {
+            opacity: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2; 
+        }
+
+        .hero h1, .hero p {
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.9);
+        }
+
+        .hero p {
+            color: #ffffff; 
+            font-size: 1.25rem;
+            max-width: 600px;
+            margin: 0 auto 1.5rem auto;
+        }
+
+        /* --- Sections General --- */
+        section {
+            padding: 5rem 5%;
+        }
+
+        .bg-gray {
+            background-color: var(--bg-gray-section); 
+        }
+
+        /* --- About Us --- */
+        .about-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .about-logo {
+            max-height: 100px;
+            margin-bottom: 1.5rem;
+            width: auto;
+        }
+
+        /* --- Services Grid --- */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border: 2px solid var(--card-border);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .card h3 {
+            color: var(--slate-gray);
+        }
+
+        /* --- Automatic Slideshow Gallery --- */
+        .slideshow-card {
+            background: var(--card-bg);
+            border-radius: 8px;
+            overflow: hidden;
+            border: 3px solid var(--forest-green); 
+            display: flex;
+            flex-direction: column;
+        }
+
+        .slideshow-container {
+            position: relative;
+            width: 100%;
+            height: 350px;
+            background-color: #000000; 
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .slide.active {
+            opacity: 1;
+        }
+
+        .slideshow-info {
+            padding: 1.5rem;
+            text-align: center;
+            background: var(--forest-green);
+        }
+
+        .slideshow-info h3 {
+            color: #ffffff; 
+            margin-bottom: 0;
+            font-size: 1.3rem;
+        }
+
+        /* --- Testimonials --- */
+        .testimonial-text {
+            font-size: 1.2rem;
+            font-style: italic;
+            color: var(--text-dark);
+        }
+        .testimonial-author {
+            margin-top: 1rem;
+            font-weight: bold;
+            color: var(--earth-brown);
+        }
+
+        /* --- Contact Section --- */
+        .contact-container {
+            max-width: 700px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            padding: 3rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            text-align: center;
+            border: 2px solid var(--card-border);
+        }
+
+        .contact-instructions {
+            font-size: 1.15rem;
+            margin-bottom: 2rem;
+            color: var(--text-dark);
+            opacity: 0.9;
+        }
+
+        .contact-highlight-box {
+            background: var(--highlight-box-bg);
+            border: 3px solid var(--forest-green);
+            border-radius: 8px;
+            padding: 2.5rem 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .phone-link {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--forest-green);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 1.5rem;
+        }
+
+        .phone-link:hover {
+            opacity: 0.8;
+        }
+
+        .contact-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .contact-buttons .btn {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        /* --- Footer --- */
+        footer {
+            background-color: var(--footer-bg);
+            color: var(--footer-text);
+            text-align: center;
+            padding: 4rem 5%;
+        }
+
+        .footer-logo {
+            max-height: 80px;
+            margin-bottom: 1.5rem;
+            background-color: #ffffff; 
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: 1px solid #cbd5e1;
+        }
+
+        footer h2 {
+            color: var(--footer-text);
+            margin-bottom: 0.5rem;
+        }
+
+        footer a {
+            color: var(--footer-text);
+            text-decoration: underline;
+            font-weight: bold;
+        }
+
+        /* --- Mobile Responsiveness --- */
+        @media (max-width: 900px) {
+            header {
+                flex-direction: column;
+                height: auto;
+                padding: 1rem 5%;
+                gap: 1rem;
+            }
+
+            .nav-container {
+                flex-direction: column;
+                gap: 1rem;
+                width: 100%;
+            }
+
+            .theme-toggle-btn {
+                margin-right: 0;
+                width: 100%;
+                justify-content: center;
+            }
+
+            nav ul {
+                flex-direction: column;
+                gap: 0.5rem;
+                width: 100%;
+            }
+            
+            nav a {
+                display: block;
+                text-align: center;
+                width: 100%;
+                padding: 12px;
+                background-color: var(--bg-gray-section);
+                border-radius: 5px;
+            }
+
+            .mobile-call-btn {
+                display: block;
+                width: 100%;
+                margin-top: 1rem;
+            }
+
+            h1 { font-size: 2rem; }
+            h2 { font-size: 1.75rem; }
+            
+            .contact-container { padding: 1.5rem; }
+            .phone-link { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="#" class="logo">
+            <img src="Landscaping_Photos/logo_MAIN.png" alt="Santiago's Landscaping Logo">
+        </a>
+        <div class="nav-container">
+            <button class="theme-toggle-btn" id="theme-toggle" aria-label="Toggle dark mode">
+                <span class="theme-icon" id="theme-icon">🌙</span>
+                <span class="theme-text" id="theme-text">Dark Mode</span>
+            </button>
+            <nav>
+                <ul>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#portfolio">Our Work</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+        <a href="tel:3136146395" class="btn mobile-call-btn">Tap to Call: (313) 614-6395</a>
+    </header>
+
+    <section class="hero">
+        <div class="hero-bg active" style="background-image: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)), url('Landscaping_Photos/heroBackground.jpg');"></div>
+        <div class="hero-bg" style="background-image: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)), url('Landscaping_Photos/backyardExample1.jpg');"></div>
+        <div class="hero-bg" style="background-image: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)), url('Landscaping_Photos/patioExample1.jpg');"></div>
+        <div class="hero-bg" style="background-image: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)), url('Landscaping_Photos/walkwayExample1.jpg');"></div>
+
+        <div class="hero-content">
+            <h1>Santiago's Landscaping LLC</h1>
+            <p>Expert <strong>residential and commercial</strong> landscaping, custom stonework, and reliable maintenance. We build elegant, lasting outdoor living spaces.</p>
+            <a href="#contact" class="btn">Request a Free Estimate</a>
+        </div>
+    </section>
+
+    <section id="about">
+        <div class="about-content">
+            <img src="Landscaping_Photos/logo_MAIN.png" alt="Santiago's Landscaping Logo" class="about-logo">
+            <h2>About Santiago's Landscaping LLC</h2>
+            <p>With years of dedicated experience serving both <strong>residential and commercial</strong> properties in the Metro Detroit area, we pride ourselves on delivering top-tier craftsmanship and unmatched customer service. Whether it is a complete backyard transformation, a commercial property upgrade, or routine maintenance, our commitment to quality ensures your outdoor spaces look stunning year-round.</p>
+            <p><strong>Family-owned and operated.</strong></p>
+        </div>
+    </section>
+
+    <section id="services" class="bg-gray">
+        <h2>Our Services</h2>
+        <div class="grid">
+            <div class="card">
+                <h3>🌿 Landscape Design & Maintenance</h3>
+                <p>Complete property transformations, seasonal spring/fall cleanups, fresh mulching, and expert shrub trimming.</p>
+            </div>
+            <div class="card">
+                <h3>🪨 Hardscaping & Stonework</h3>
+                <p>Beautiful, durable stonework including custom patio builds, patio repairs, and professional paver installation.</p>
+            </div>
+            <div class="card">
+                <h3>🔥 Firepits</h3>
+                <p>Extend your outdoor living season with safely constructed, beautifully designed stone and brick firepits.</p>
+            </div>
+            <div class="card">
+                <h3>💧 Irrigation Systems</h3>
+                <p>Keep your lawn lush and green with automated, water-efficient irrigation installations.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="portfolio">
+        <h2>Project Gallery</h2>
+        <div class="grid">
+            
+            <div class="slideshow-card">
+                <div class="slideshow-container portfolio-slideshow">
+                    <img src="Landscaping_Photos/patioExample1.jpg" class="slide active" alt="Custom Paver Patio">
+                    <img src="Landscaping_Photos/walkwayExample1.jpg" class="slide" alt="Stone Walkway">
+                    <img src="Landscaping_Photos/patioExample2.jpg" class="slide" alt="Outdoor Patio Space">
+                    <img src="Landscaping_Photos/walkwayExample2.jpg" class="slide" alt="Front Yard Walkway">
+                    <img src="Landscaping_Photos/patioExample5.jpg" class="slide" alt="Patio Hardscaping">
+                </div>
+                <div class="slideshow-info">
+                    <h3>Patios & Walkways</h3>
+                </div>
+            </div>
+
+            <div class="slideshow-card">
+                <div class="slideshow-container portfolio-slideshow">
+                    <img src="Landscaping_Photos/backyardExample1.jpg" class="slide active" alt="Backyard Transformation">
+                    <img src="Landscaping_Photos/fontyardExample1.jpg" class="slide" alt="Front Yard Landscaping">
+                    <img src="Landscaping_Photos/frontyardExample2.jpg" class="slide" alt="Front Yard Design">
+                    <img src="Landscaping_Photos/frontyardExample3.jpg" class="slide" alt="Curb Appeal Landscaping">
+                </div>
+                <div class="slideshow-info">
+                    <h3>Landscape Design</h3>
+                </div>
+            </div>
+
+            <div class="slideshow-card">
+                <div class="slideshow-container portfolio-slideshow">
+                    <img src="Landscaping_Photos/firepitExample5.jpg" class="slide active" alt="Custom Stone Firepit">
+                    <img src="Landscaping_Photos/exampleGardenWall1.jpg" class="slide" alt="Retaining Garden Wall">
+                    <img src="Landscaping_Photos/treeSkirtExample1.jpg" class="slide" alt="Decorative Tree Skirt">
+                    <img src="Landscaping_Photos/exampleGardenWall2.jpg" class="slide" alt="Stone Garden Feature">
+                </div>
+                <div class="slideshow-info">
+                    <h3>Custom Features & Walls</h3>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="bg-gray">
+        <h2>What Our Clients Say</h2>
+        <div class="grid">
+            <div class="card">
+                <p class="testimonial-text">"Santiago's crew completely revitalized our backyard. The new paver patio is exactly what we wanted, and they were incredibly professional."</p>
+                <p class="testimonial-author">- Margaret T., Royal Oak</p>
+            </div>
+            <div class="card">
+                <p class="testimonial-text">"I highly recommend them for seasonal cleanup and mulching. They show up on time, work hard, and leave the yard looking immaculate."</p>
+                <p class="testimonial-author">- Robert H., Livonia</p>
+            </div>
+            <div class="card">
+                <p class="testimonial-text">"They completely redesigned our front walkway and added gorgeous garden beds. Fast, efficient, and super friendly."</p>
+                <p class="testimonial-author">- David C., Dearborn</p>
+            </div>
+            <div class="card">
+                <p class="testimonial-text">"The new custom firepit is the highlight of our backyard! We use it every weekend. Excellent stonework and attention to detail."</p>
+                <p class="testimonial-author">- Sarah M., Canton</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <h2>Contact Us for a Free Estimate</h2>
+        <div class="contact-container">
+            <p class="contact-instructions">
+                The fastest way to get your free, no-obligation estimate is to call or text us. Please have a brief description of the work you need done and your property address ready!
+            </p>
+            
+            <div class="contact-highlight-box">
+                <p style="margin-bottom: 0.5rem; font-weight: bold; color: var(--text-dark); text-transform: uppercase; letter-spacing: 1px;">Call or Text us directly at:</p>
+                
+                <a href="tel:3136146395" class="phone-link">(313) 614-6395</a>
+                
+                <div class="contact-buttons">
+                    <a href="tel:3136146395" class="btn btn-earth">📞 Tap to Call</a>
+                    <a href="sms:3136146395" class="btn">💬 Tap to Text</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <img src="Landscaping_Photos/logo_MAIN.png" alt="Santiago's Landscaping Logo" class="footer-logo">
+        
+        <h2>Santiago's Landscaping LLC</h2>
+        <p>Serving Metro Detroit with pride.</p>
+        <p style="font-size: 1.5rem; margin: 1rem 0;">
+            <strong><a href="tel:3136146395">(313) 614-6395</a></strong>
+        </p>
+        <p style="margin-top: 2rem;"><small>&copy; 2026 Santiago's Landscaping LLC. All rights reserved.</small></p>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // --- 1. Light/Dark Mode Logic ---
+            const toggleBtn = document.getElementById('theme-toggle');
+            const themeIcon = document.getElementById('theme-icon');
+            const themeText = document.getElementById('theme-text');
+            const body = document.body;
+
+            // Check localStorage for preferred theme on load
+            const currentTheme = localStorage.getItem('theme');
+            if (currentTheme) {
+                body.classList.add(currentTheme);
+                updateToggleUI(currentTheme === 'dark-mode');
+            }
+
+            toggleBtn.addEventListener('click', function() {
+                // Toggle the class on body
+                body.classList.toggle('dark-mode');
+                
+                let isDarkMode = body.classList.contains('dark-mode');
+                
+                // Update localStorage so preference persists
+                if (isDarkMode) {
+                    localStorage.setItem('theme', 'dark-mode');
+                } else {
+                    localStorage.setItem('theme', 'light-mode'); 
+                }
+                
+                updateToggleUI(isDarkMode);
+            });
+
+            function updateToggleUI(isDark) {
+                if (isDark) {
+                    themeIcon.textContent = '☀️'; 
+                    themeText.textContent = 'Light Mode';
+                } else {
+                    themeIcon.textContent = '🌙'; 
+                    themeText.textContent = 'Dark Mode';
+                }
+            }
+
+
+            // --- 2. Hero Background Logic ---
+            const heroSlides = document.querySelectorAll('.hero-bg');
+            let currentHeroIndex = 0;
+
+            function nextHeroSlide() {
+                if(heroSlides.length === 0) return; // safety check
+                
+                heroSlides[currentHeroIndex].classList.remove('active');
+                currentHeroIndex = (currentHeroIndex + 1) % heroSlides.length;
+                heroSlides[currentHeroIndex].classList.add('active');
+
+                // If we loop back to the main image (index 0), wait 5 seconds. Otherwise, wait 3 seconds.
+                let nextDelay = (currentHeroIndex === 0) ? 5000 : 3000;
+                setTimeout(nextHeroSlide, nextDelay);
+            }
+            
+            // Start the first transition after the initial 5 seconds
+            if(heroSlides.length > 1) {
+                setTimeout(nextHeroSlide, 5000);
+            }
+
+
+            // --- 3. Portfolio Gallery Logic ---
+            const portfolioSlideshows = document.querySelectorAll('.portfolio-slideshow');
+            
+            portfolioSlideshows.forEach(container => {
+                let slides = container.querySelectorAll('.slide');
+                let currentIndex = 0;
+                
+                if(slides.length > 1) {
+                    setInterval(() => {
+                        slides[currentIndex].classList.remove('active');
+                        currentIndex = (currentIndex + 1) % slides.length;
+                        slides[currentIndex].classList.add('active');
+                    }, 3500); 
+                }
+            });
+        });
+    </script>
+</body>
+</html>
